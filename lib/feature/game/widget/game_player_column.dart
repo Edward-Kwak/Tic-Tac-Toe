@@ -18,7 +18,7 @@ class GamePlayerColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text('Player1'),
+        Text('Player $playerNumber'),
         Icon(playerIcon, color: playerColor),
         BlocBuilder<GameBloc, GameState>(
           buildWhen: (previous, current) => current is GameMarkChecked,
@@ -26,7 +26,11 @@ class GamePlayerColumn extends StatelessWidget {
             int count = 3;
 
             if (state is GameMarkChecked) {
-              count = state.firstPlayerUndoCount;
+              if (playerNumber == 1) {
+                count = state.firstPlayerUndoCount;
+              } else {
+                count = state.secondPlayerUndoCount;
+              }
             }
 
             return Text('무르기 횟수: $count');

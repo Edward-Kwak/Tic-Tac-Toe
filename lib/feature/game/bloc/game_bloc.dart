@@ -157,33 +157,24 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         }
 
         firstPlayerUndoCount -= 1;
-        final data1 = makeDataHistoryList.removeLast();
-        markMap.remove(data1);
-        final data2 = makeDataHistoryList.removeLast();
-        markMap.remove(data2);
+        undo(2);
       } else {
         if (secondPlayerUndoCount == 0) {
           return null;
         }
 
         secondPlayerUndoCount -= 1;
-
-        final data = makeDataHistoryList.removeLast();
-        markMap.remove(data);
-
+        undo(1);
         currentPlayer = 2;
       }
-    } else {
+    } else if (currentPlayer == 2) {
       if (event.playerNumber == 1) {
         if (firstPlayerUndoCount == 0) {
           return null;
         }
 
         firstPlayerUndoCount -= 1;
-
-        final data = makeDataHistoryList.removeLast();
-        markMap.remove(data);
-
+        undo(1);
         currentPlayer = 1;
       } else {
         if (secondPlayerUndoCount == 0) {
@@ -195,11 +186,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         }
 
         secondPlayerUndoCount -= 1;
-
-        final data1 = makeDataHistoryList.removeLast();
-        markMap.remove(data1);
-        final data2 = makeDataHistoryList.removeLast();
-        markMap.remove(data2);
+        undo(2);
       }
     }
 
@@ -229,6 +216,47 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     final randomIndex = Random().nextInt(indexList.length);
     add(GamePlayed(markIndex: indexList[randomIndex], playerNumber: currentPlayer));
+  }
+
+  FutureOr<void> _onGameSaveRequested(
+    GameSaveRequested event,
+    Emitter<GameState> emit,
+  ) async {
+    emit(const GameLoading());
+
+    try {
+      List<MarkOrderData> markDataList = List.generate(maxNumber * maxNumber, (index) => const MarkOrderData());
+
+      for (int i = 0; i < makeDataHistoryList.length; i++) {
+        final data = markMap[makeDataHistoryList[i]]!;
+        final cur = data.rowNumber * maxNumber + data.columnNumber;
+        markDataList[cur] = MarkOrderData(order: i, markData: data);
+      }
+
+      final gameRecord = GameRecord(
+        firstPlayerColorIndex: firstPlayerColorIndex,
+        secondPlayerColorIndex: secondPlayerColorIndex,
+        firstPlayerIconIndex: firstPlayerIconIndex,
+        secondPlayerIconIndex: secondPlayerIconIndex,
+        markDataList: [...markDataList],
+        createdAt: DateTime.now(),
+        winnerPlayer: winnerPlayer,
+        maxNumber: maxNumber,
+      );
+
+      await appLocalDatasource.saveGameRecord(gameRecord);
+
+      emit(const GameSaveSucceed());
+    } catch (_) {
+      emit(const GameSaveError());
+    }
+  }
+
+  void undo(int undoCount) {
+    for (int i = 0; i < undoCount; i++) {
+      final data = makeDataHistoryList.removeLast();
+      markMap.remove(data);
+    }
   }
 
   ({bool isFinish, int? winnerPlayer}) checkGameState() {
@@ -298,39 +326,5 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
 
     return (isFinish: false, winnerPlayer: null);
-  }
-
-  FutureOr<void> _onGameSaveRequested(
-    GameSaveRequested event,
-    Emitter<GameState> emit,
-  ) async {
-    emit(const GameLoading());
-
-    try {
-      List<MarkOrderData> markDataList = List.generate(maxNumber * maxNumber, (index) => const MarkOrderData());
-
-      for (int i = 0; i < makeDataHistoryList.length; i++) {
-        final data = markMap[makeDataHistoryList[i]]!;
-        final cur = data.rowNumber * maxNumber + data.columnNumber;
-        markDataList[cur] = MarkOrderData(order: i, markData: data);
-      }
-
-      final gameRecord = GameRecord(
-        firstPlayerColorIndex: firstPlayerColorIndex,
-        secondPlayerColorIndex: secondPlayerColorIndex,
-        firstPlayerIconIndex: firstPlayerIconIndex,
-        secondPlayerIconIndex: secondPlayerIconIndex,
-        markDataList: [...markDataList],
-        createdAt: DateTime.now(),
-        winnerPlayer: winnerPlayer,
-        maxNumber: maxNumber,
-      );
-
-      await appLocalDatasource.saveGameRecord(gameRecord);
-
-      emit(const GameSaveSucceed());
-    } catch (_) {
-      emit(const GameSaveError());
-    }
   }
 }

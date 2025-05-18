@@ -36,6 +36,7 @@ class GameScreen extends StatelessWidget {
         if (state is GameFinished) {
           final result = await showDialog(
               context: context,
+              barrierDismissible: false,
               builder: (context) => GameDialog(
                     title: '게임이 종료되었습니다',
                     content: '''

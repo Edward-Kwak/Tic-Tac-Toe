@@ -14,7 +14,7 @@ final class AppLocalDatasource {
       results.add(data);
     }
 
-    return [...results.reversed];
+    return [...results];
   }
 
   Future<void> saveGameRecord(GameRecord gameRecord) async {
