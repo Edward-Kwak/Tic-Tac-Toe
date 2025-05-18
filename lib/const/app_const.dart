@@ -15,4 +15,6 @@ abstract class AppConst {
     CupertinoIcons.triangle,
     CupertinoIcons.square,
   ];
+
+  static const maxTimerCount = 15;
 }

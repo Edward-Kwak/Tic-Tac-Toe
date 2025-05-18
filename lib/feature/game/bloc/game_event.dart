@@ -26,6 +26,10 @@ final class GamePlayed extends GameEvent {
   List<Object?> get props => [markIndex, playerNumber];
 }
 
+final class GameRandomPlayed extends GameEvent {
+  const GameRandomPlayed();
+}
+
 final class GameFinishRequested extends GameEvent {
   const GameFinishRequested();
 }

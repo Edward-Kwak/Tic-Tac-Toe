@@ -4,7 +4,7 @@ sealed class GameState extends Equatable {
   const GameState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 final class GameInitial extends GameState {
@@ -17,7 +17,7 @@ final class GameTimerLoaded extends GameState {
   final int second;
 
   @override
-  List<Object> get props => [second];
+  List<Object?> get props => [second];
 }
 
 final class GameMarkChecked extends GameState {
@@ -34,5 +34,14 @@ final class GameMarkChecked extends GameState {
   final int secondPlayerUndoCount;
 
   @override
-  List<Object> get props => [currentPlayerNumber, markMap, firstPlayerUndoCount, secondPlayerUndoCount];
+  List<Object?> get props => [currentPlayerNumber, markMap, firstPlayerUndoCount, secondPlayerUndoCount];
+}
+
+final class GameFinished extends GameState {
+  const GameFinished({required this.winnerPlayer});
+
+  final int? winnerPlayer;
+
+  @override
+  List<Object?> get props => [winnerPlayer];
 }

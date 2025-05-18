@@ -14,6 +14,8 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int firstAttackPlayer = Random().nextInt(2) + 1;
+
     return Scaffold(
       appBar: AppBar(title: const Text('SettingScreen')),
       body: Column(
@@ -60,8 +62,6 @@ class SettingScreen extends StatelessWidget {
           BlocBuilder<SettingBloc, SettingState>(
             buildWhen: (previous, current) => current is SettingPlayerDataChecked,
             builder: (context, state) {
-              int firstAttackPlayer = Random().nextInt(2) + 1;
-
               if (state is SettingPlayerDataChecked) {
                 firstAttackPlayer = state.firstAttackPlayerNumber;
               }
@@ -82,7 +82,7 @@ class SettingScreen extends StatelessWidget {
                       secondPlayerColor: AppConst.colorList[bloc.secondPlayerColorIndex],
                       firstPlayerIcon: AppConst.iconList[bloc.firstPlayerIconIndex],
                       secondPlayerIcon: AppConst.iconList[bloc.secondPlayerIconIndex],
-                      firstAttackPlayerNumber: bloc.firstAttackPlayerNumber,
+                      firstAttackPlayerNumber: firstAttackPlayer,
                       maxNumber: bloc.maxNumber,
                     ),
                     child: GameScreen(
@@ -90,7 +90,7 @@ class SettingScreen extends StatelessWidget {
                       secondPlayerColor: AppConst.colorList[bloc.secondPlayerColorIndex],
                       firstPlayerIcon: AppConst.iconList[bloc.firstPlayerIconIndex],
                       secondPlayerIcon: AppConst.iconList[bloc.secondPlayerIconIndex],
-                      firstAttackPlayer: bloc.firstAttackPlayerNumber,
+                      firstAttackPlayer: firstAttackPlayer,
                       maxNumber: bloc.maxNumber,
                     ),
                   ),
