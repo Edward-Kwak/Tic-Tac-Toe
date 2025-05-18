@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/const/app_const.dart';
 import 'package:tic_tac_toe/feature/setting/bloc/setting_bloc.dart';
 
-class PlayerColumn extends StatelessWidget {
-  const PlayerColumn({super.key, required this.playerNumber});
+class SettingPlayerColumn extends StatelessWidget {
+  const SettingPlayerColumn({super.key, required this.playerNumber});
 
   final int playerNumber;
 

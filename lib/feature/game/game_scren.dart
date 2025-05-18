@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/const/app_const.dart';
 import 'package:tic_tac_toe/feature/game/bloc/game_bloc.dart';
+import 'package:tic_tac_toe/feature/game/widget/game_dialog.dart';
+import 'package:tic_tac_toe/feature/game/widget/game_player_column.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({
@@ -33,29 +35,15 @@ class GameScreen extends StatelessWidget {
 
         if (state is GameFinished) {
           final result = await showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('게임이 종료되었습니다'),
-              content: Text(
-                '''
+              context: context,
+              builder: (context) => GameDialog(
+                    title: '게임이 종료되었습니다',
+                    content: '''
 ${state.winnerPlayer == null ? '무승부입니다' : '우승: Player${state.winnerPlayer}'}
 결과를 저장하시겠습니까?
 ''',
-                textAlign: TextAlign.center,
-              ),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('확인'),
-                ),
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('취소'),
-                ),
-              ],
-            ),
-          );
+                    hasCancel: true,
+                  ));
 
           if (result != true) {
             navigator.pop();
@@ -67,32 +55,14 @@ ${state.winnerPlayer == null ? '무승부입니다' : '우승: Player${state.win
         } else if (state is GameSaveError) {
           await showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-              content: const Text('저장하는데 실패했습니다.', textAlign: TextAlign.center),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('확인'),
-                ),
-              ],
-            ),
+            builder: (context) => const GameDialog(content: '저장에 실패했습니다.'),
           );
 
           navigator.pop();
         } else if (state is GameSaveSucceed) {
           await showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-              content: const Text('저장 완료되었습니다.', textAlign: TextAlign.center),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('확인'),
-                ),
-              ],
-            ),
+            builder: (context) => const GameDialog(content: '저장이 완료되었습니다!'),
           );
 
           navigator.pop();
@@ -106,22 +76,10 @@ ${state.winnerPlayer == null ? '무승부입니다' : '우승: Player${state.win
             leading: IconButton(
               onPressed: () async {
                 final navigator = Navigator.of(context);
+
                 final result = await showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    content: const Text('종료하고 나가시겠습니까?'),
-                    actionsAlignment: MainAxisAlignment.center,
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text('확인'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('취소'),
-                      ),
-                    ],
-                  ),
+                  builder: (context) => const GameDialog(content: '종료하고 나가시겠습니까?', hasCancel: true),
                 );
 
                 if (result != true) {
@@ -139,53 +97,9 @@ ${state.winnerPlayer == null ? '무승부입니다' : '우승: Player${state.win
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(width: 24),
-                  Column(
-                    children: [
-                      const Text('Player1'),
-                      const SizedBox(height: 8),
-                      BlocBuilder<GameBloc, GameState>(
-                        buildWhen: (previous, current) => current is GameMarkChecked,
-                        builder: (context, state) {
-                          int count = 3;
-
-                          if (state is GameMarkChecked) {
-                            count = state.firstPlayerUndoCount;
-                          }
-
-                          return Text('무르기 횟수: $count');
-                        },
-                      ),
-                      ElevatedButton(
-                        onPressed: () => context.read<GameBloc>().add(const GameUndoRequested(playerNumber: 1)),
-                        child: const Text('무르기'),
-                      ),
-                    ],
-                  ),
-                  Icon(firstPlayerIcon, color: firstPlayerColor),
+                  GamePlayerColumn(playerNumber: 1, playerIcon: firstPlayerIcon, playerColor: firstPlayerColor),
                   const Spacer(),
-                  Column(
-                    children: [
-                      const Text('Player2'),
-                      const SizedBox(height: 8),
-                      BlocBuilder<GameBloc, GameState>(
-                        buildWhen: (previous, current) => current is GameMarkChecked,
-                        builder: (context, state) {
-                          int count = 3;
-
-                          if (state is GameMarkChecked) {
-                            count = state.secondPlayerUndoCount;
-                          }
-
-                          return Text('무르기 횟수: $count');
-                        },
-                      ),
-                      ElevatedButton(
-                        onPressed: () => context.read<GameBloc>().add(const GameUndoRequested(playerNumber: 2)),
-                        child: const Text('무르기'),
-                      ),
-                    ],
-                  ),
-                  Icon(secondPlayerIcon, color: secondPlayerColor),
+                  GamePlayerColumn(playerNumber: 2, playerIcon: secondPlayerIcon, playerColor: secondPlayerColor),
                   const SizedBox(width: 24),
                 ],
               ),

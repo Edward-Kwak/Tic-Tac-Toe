@@ -57,9 +57,12 @@ class RecordDetailScreen extends StatelessWidget {
                     children: [
                       if (gameRecord.markDataList[index].order != null)
                         Positioned(
-                          top: 8,
-                          left: 8,
-                          child: Text('${gameRecord.markDataList[index].order! + 1}번째'),
+                          top: 4,
+                          left: 4,
+                          child: Text(
+                            '${gameRecord.markDataList[index].order! + 1}번째',
+                            style: const TextStyle(fontSize: 12),
+                          ),
                         ),
                       if (gameRecord.markDataList[index].markData != null)
                         Icon(

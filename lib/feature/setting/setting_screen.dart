@@ -9,7 +9,7 @@ import 'package:tic_tac_toe/di/di.dart';
 import 'package:tic_tac_toe/feature/game/bloc/game_bloc.dart';
 import 'package:tic_tac_toe/feature/game/game_scren.dart';
 import 'package:tic_tac_toe/feature/setting/bloc/setting_bloc.dart';
-import 'package:tic_tac_toe/feature/setting/widget/player_column.dart';
+import 'package:tic_tac_toe/feature/setting/widget/setting_player_column.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -57,8 +57,8 @@ class SettingScreen extends StatelessWidget {
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              PlayerColumn(playerNumber: 1),
-              PlayerColumn(playerNumber: 2),
+              SettingPlayerColumn(playerNumber: 1),
+              SettingPlayerColumn(playerNumber: 2),
             ],
           ),
           BlocBuilder<SettingBloc, SettingState>(
