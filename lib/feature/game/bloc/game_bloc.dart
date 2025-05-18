@@ -41,6 +41,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   final int maxNumber;
 
   int currentPlayer = 1;
+  int? winnerPlayer;
 
   int firstPlayerUndoCount = 3;
   int secondPlayerUndoCount = 3;
@@ -120,6 +121,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     if (gameFinishData.isFinish) {
       streamSubscription?.cancel();
+      winnerPlayer = gameFinishData.winnerPlayer;
 
       emit(GameFinished(winnerPlayer: gameFinishData.winnerPlayer));
     }
@@ -311,6 +313,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         firstPlayerIconIndex: firstPlayerIconIndex,
         secondPlayerIconIndex: secondPlayerIconIndex,
         markDataList: [...makeDataHistoryList.map((e) => markMap[e]!)],
+        createdAt: DateTime.now(),
+        winnerPlayer: winnerPlayer,
+        maxNumber: maxNumber,
       );
 
       await appLocalDatasource.saveGameRecord(gameRecord);

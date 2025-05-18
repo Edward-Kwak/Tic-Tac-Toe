@@ -28,6 +28,10 @@ mixin _$GameRecord {
   int get secondPlayerIconIndex => throw _privateConstructorUsedError;
   @HiveField(5)
   List<MarkData> get markDataList => throw _privateConstructorUsedError;
+  @HiveField(6)
+  int get maxNumber => throw _privateConstructorUsedError;
+  @HiveField(7)
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   /// Create a copy of GameRecord
   /// with the given fields replaced by the non-null parameter values.
@@ -48,7 +52,9 @@ abstract class $GameRecordCopyWith<$Res> {
       @HiveField(2) int secondPlayerColorIndex,
       @HiveField(3) int firstPlayerIconIndex,
       @HiveField(4) int secondPlayerIconIndex,
-      @HiveField(5) List<MarkData> markDataList});
+      @HiveField(5) List<MarkData> markDataList,
+      @HiveField(6) int maxNumber,
+      @HiveField(7) DateTime createdAt});
 }
 
 /// @nodoc
@@ -72,6 +78,8 @@ class _$GameRecordCopyWithImpl<$Res, $Val extends GameRecord>
     Object? firstPlayerIconIndex = null,
     Object? secondPlayerIconIndex = null,
     Object? markDataList = null,
+    Object? maxNumber = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       winnerPlayer: freezed == winnerPlayer
@@ -98,6 +106,14 @@ class _$GameRecordCopyWithImpl<$Res, $Val extends GameRecord>
           ? _value.markDataList
           : markDataList // ignore: cast_nullable_to_non_nullable
               as List<MarkData>,
+      maxNumber: null == maxNumber
+          ? _value.maxNumber
+          : maxNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -116,7 +132,9 @@ abstract class _$$GameRecordImplCopyWith<$Res>
       @HiveField(2) int secondPlayerColorIndex,
       @HiveField(3) int firstPlayerIconIndex,
       @HiveField(4) int secondPlayerIconIndex,
-      @HiveField(5) List<MarkData> markDataList});
+      @HiveField(5) List<MarkData> markDataList,
+      @HiveField(6) int maxNumber,
+      @HiveField(7) DateTime createdAt});
 }
 
 /// @nodoc
@@ -138,6 +156,8 @@ class __$$GameRecordImplCopyWithImpl<$Res>
     Object? firstPlayerIconIndex = null,
     Object? secondPlayerIconIndex = null,
     Object? markDataList = null,
+    Object? maxNumber = null,
+    Object? createdAt = null,
   }) {
     return _then(_$GameRecordImpl(
       winnerPlayer: freezed == winnerPlayer
@@ -164,6 +184,14 @@ class __$$GameRecordImplCopyWithImpl<$Res>
           ? _value._markDataList
           : markDataList // ignore: cast_nullable_to_non_nullable
               as List<MarkData>,
+      maxNumber: null == maxNumber
+          ? _value.maxNumber
+          : maxNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -178,7 +206,9 @@ class _$GameRecordImpl implements _GameRecord {
       @HiveField(2) required this.secondPlayerColorIndex,
       @HiveField(3) required this.firstPlayerIconIndex,
       @HiveField(4) required this.secondPlayerIconIndex,
-      @HiveField(5) required final List<MarkData> markDataList})
+      @HiveField(5) required final List<MarkData> markDataList,
+      @HiveField(6) required this.maxNumber,
+      @HiveField(7) required this.createdAt})
       : _markDataList = markDataList;
 
   @override
@@ -206,8 +236,15 @@ class _$GameRecordImpl implements _GameRecord {
   }
 
   @override
+  @HiveField(6)
+  final int maxNumber;
+  @override
+  @HiveField(7)
+  final DateTime createdAt;
+
+  @override
   String toString() {
-    return 'GameRecord(winnerPlayer: $winnerPlayer, firstPlayerColorIndex: $firstPlayerColorIndex, secondPlayerColorIndex: $secondPlayerColorIndex, firstPlayerIconIndex: $firstPlayerIconIndex, secondPlayerIconIndex: $secondPlayerIconIndex, markDataList: $markDataList)';
+    return 'GameRecord(winnerPlayer: $winnerPlayer, firstPlayerColorIndex: $firstPlayerColorIndex, secondPlayerColorIndex: $secondPlayerColorIndex, firstPlayerIconIndex: $firstPlayerIconIndex, secondPlayerIconIndex: $secondPlayerIconIndex, markDataList: $markDataList, maxNumber: $maxNumber, createdAt: $createdAt)';
   }
 
   @override
@@ -226,7 +263,11 @@ class _$GameRecordImpl implements _GameRecord {
             (identical(other.secondPlayerIconIndex, secondPlayerIconIndex) ||
                 other.secondPlayerIconIndex == secondPlayerIconIndex) &&
             const DeepCollectionEquality()
-                .equals(other._markDataList, _markDataList));
+                .equals(other._markDataList, _markDataList) &&
+            (identical(other.maxNumber, maxNumber) ||
+                other.maxNumber == maxNumber) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @override
@@ -237,7 +278,9 @@ class _$GameRecordImpl implements _GameRecord {
       secondPlayerColorIndex,
       firstPlayerIconIndex,
       secondPlayerIconIndex,
-      const DeepCollectionEquality().hash(_markDataList));
+      const DeepCollectionEquality().hash(_markDataList),
+      maxNumber,
+      createdAt);
 
   /// Create a copy of GameRecord
   /// with the given fields replaced by the non-null parameter values.
@@ -250,13 +293,14 @@ class _$GameRecordImpl implements _GameRecord {
 
 abstract class _GameRecord implements GameRecord {
   const factory _GameRecord(
-          {@HiveField(0) final int? winnerPlayer,
-          @HiveField(1) required final int firstPlayerColorIndex,
-          @HiveField(2) required final int secondPlayerColorIndex,
-          @HiveField(3) required final int firstPlayerIconIndex,
-          @HiveField(4) required final int secondPlayerIconIndex,
-          @HiveField(5) required final List<MarkData> markDataList}) =
-      _$GameRecordImpl;
+      {@HiveField(0) final int? winnerPlayer,
+      @HiveField(1) required final int firstPlayerColorIndex,
+      @HiveField(2) required final int secondPlayerColorIndex,
+      @HiveField(3) required final int firstPlayerIconIndex,
+      @HiveField(4) required final int secondPlayerIconIndex,
+      @HiveField(5) required final List<MarkData> markDataList,
+      @HiveField(6) required final int maxNumber,
+      @HiveField(7) required final DateTime createdAt}) = _$GameRecordImpl;
 
   @override
   @HiveField(0)
@@ -276,6 +320,12 @@ abstract class _GameRecord implements GameRecord {
   @override
   @HiveField(5)
   List<MarkData> get markDataList;
+  @override
+  @HiveField(6)
+  int get maxNumber;
+  @override
+  @HiveField(7)
+  DateTime get createdAt;
 
   /// Create a copy of GameRecord
   /// with the given fields replaced by the non-null parameter values.

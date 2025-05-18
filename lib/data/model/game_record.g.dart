@@ -23,13 +23,15 @@ class GameRecordImplAdapter extends TypeAdapter<_$GameRecordImpl> {
       firstPlayerIconIndex: fields[3] as int,
       secondPlayerIconIndex: fields[4] as int,
       markDataList: (fields[5] as List).cast<MarkData>(),
+      maxNumber: fields[6] as int,
+      createdAt: fields[7] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$GameRecordImpl obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.winnerPlayer)
       ..writeByte(1)
@@ -40,6 +42,10 @@ class GameRecordImplAdapter extends TypeAdapter<_$GameRecordImpl> {
       ..write(obj.firstPlayerIconIndex)
       ..writeByte(4)
       ..write(obj.secondPlayerIconIndex)
+      ..writeByte(6)
+      ..write(obj.maxNumber)
+      ..writeByte(7)
+      ..write(obj.createdAt)
       ..writeByte(5)
       ..write(obj.markDataList);
   }

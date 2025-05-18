@@ -27,9 +27,7 @@ mixin _$MarkData {
   @HiveField(4)
   int get iconIndex => throw _privateConstructorUsedError;
 
-  /// Create a copy of MarkData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $MarkDataCopyWith<MarkData> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -57,8 +55,6 @@ class _$MarkDataCopyWithImpl<$Res, $Val extends MarkData>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MarkData
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -117,8 +113,6 @@ class __$$MarkDataImplCopyWithImpl<$Res>
       _$MarkDataImpl _value, $Res Function(_$MarkDataImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of MarkData
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -206,9 +200,7 @@ class _$MarkDataImpl implements _MarkData {
   int get hashCode => Object.hash(runtimeType, playerNumber, rowNumber,
       columnNumber, colorIndex, iconIndex);
 
-  /// Create a copy of MarkData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$MarkDataImplCopyWith<_$MarkDataImpl> get copyWith =>
@@ -238,11 +230,8 @@ abstract class _MarkData implements MarkData {
   @override
   @HiveField(4)
   int get iconIndex;
-
-  /// Create a copy of MarkData
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$MarkDataImplCopyWith<_$MarkDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

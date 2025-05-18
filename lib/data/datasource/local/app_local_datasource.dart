@@ -6,7 +6,16 @@ final class AppLocalDatasource {
 
   const AppLocalDatasource({required this.box});
 
-  List<GameRecord> getGameRecordList() => box.get('game_record') ?? [];
+  List<GameRecord> getGameRecordList() {
+    final results = <GameRecord>[];
+    final cur = box.get('game_record') ?? [];
+
+    for (final data in cur) {
+      results.add(data);
+    }
+
+    return [...results.reversed];
+  }
 
   Future<void> saveGameRecord(GameRecord gameRecord) async {
     List<GameRecord> cur = getGameRecordList();

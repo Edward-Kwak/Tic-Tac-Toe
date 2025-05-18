@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tic_tac_toe/data/model/mark_data.dart';
@@ -16,5 +15,7 @@ class GameRecord with _$GameRecord {
     @HiveField(3) required int firstPlayerIconIndex,
     @HiveField(4) required int secondPlayerIconIndex,
     @HiveField(5) required List<MarkData> markDataList,
+    @HiveField(6) required int maxNumber,
+    @HiveField(7) required DateTime createdAt,
   }) = _GameRecord;
 }
