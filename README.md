@@ -1,16 +1,26 @@
-# tic_tac_toe
+# Tic_Tac_Toe
+Flutter SDK Version: 3.27.4
 
-A new Flutter project.
+Dart SDK Version: 3.6.2
 
-## Getting Started
+#### <br>Bloc을 이용한 Tic-Tac-Toe 게임입니다.<br>
 
-This project is a starting point for a Flutter application.
+<br>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Screens
+### Home
+- 앱 실행시 최초 화면 입니다.
+### Setting
+- 2명의 플레이어 중 선공할 플레이어를 지정 가능합니다.
+- 각 플레이어의 표시 색상과 문양을 변경 가능합니다.
+- 3x3 ~ 6x6 의 게임 보드 사이즈 중, 원하는 게임 보드 사이즈를 정할 수 있습니다.
+### Game
+- 게임 플레이 화면 입니다.
+- 각 플레이어 별, 최대 3번 까지 무르기가 가능합니다.
+- 제한 시간 내에 공격을 하지 않으면, 랜덤으로 빈 칸에 표시가 되고 턴이 종료됩니다.
+### Records
+- 게임 플레이 후 게임을 저장한 경우, 저장된 게임 리스트를 보여줍니다.
+- 최신순으로 정렬되며, 날짜와 승부 여부가 표시됩니다.
+### RecordDetail
+- 저장된 게임의 상세 내역을 볼 수 있는 화면입니다.
+- 각 플레이어가 몇 번째 턴에, 어디에 두었는지 확인 가능합니다.
