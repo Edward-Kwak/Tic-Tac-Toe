@@ -9,6 +9,8 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(GameRecordImplAdapter());
   Hive.registerAdapter(MarkDataImplAdapter());
+  Hive.registerAdapter(MarkOrderDataImplAdapter());
+
   await configureDependencies();
 
   runApp(const App());

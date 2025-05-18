@@ -27,7 +27,7 @@ mixin _$GameRecord {
   @HiveField(4)
   int get secondPlayerIconIndex => throw _privateConstructorUsedError;
   @HiveField(5)
-  List<MarkData> get markDataList => throw _privateConstructorUsedError;
+  List<MarkOrderData> get markDataList => throw _privateConstructorUsedError;
   @HiveField(6)
   int get maxNumber => throw _privateConstructorUsedError;
   @HiveField(7)
@@ -52,7 +52,7 @@ abstract class $GameRecordCopyWith<$Res> {
       @HiveField(2) int secondPlayerColorIndex,
       @HiveField(3) int firstPlayerIconIndex,
       @HiveField(4) int secondPlayerIconIndex,
-      @HiveField(5) List<MarkData> markDataList,
+      @HiveField(5) List<MarkOrderData> markDataList,
       @HiveField(6) int maxNumber,
       @HiveField(7) DateTime createdAt});
 }
@@ -105,7 +105,7 @@ class _$GameRecordCopyWithImpl<$Res, $Val extends GameRecord>
       markDataList: null == markDataList
           ? _value.markDataList
           : markDataList // ignore: cast_nullable_to_non_nullable
-              as List<MarkData>,
+              as List<MarkOrderData>,
       maxNumber: null == maxNumber
           ? _value.maxNumber
           : maxNumber // ignore: cast_nullable_to_non_nullable
@@ -132,7 +132,7 @@ abstract class _$$GameRecordImplCopyWith<$Res>
       @HiveField(2) int secondPlayerColorIndex,
       @HiveField(3) int firstPlayerIconIndex,
       @HiveField(4) int secondPlayerIconIndex,
-      @HiveField(5) List<MarkData> markDataList,
+      @HiveField(5) List<MarkOrderData> markDataList,
       @HiveField(6) int maxNumber,
       @HiveField(7) DateTime createdAt});
 }
@@ -183,7 +183,7 @@ class __$$GameRecordImplCopyWithImpl<$Res>
       markDataList: null == markDataList
           ? _value._markDataList
           : markDataList // ignore: cast_nullable_to_non_nullable
-              as List<MarkData>,
+              as List<MarkOrderData>,
       maxNumber: null == maxNumber
           ? _value.maxNumber
           : maxNumber // ignore: cast_nullable_to_non_nullable
@@ -206,7 +206,7 @@ class _$GameRecordImpl implements _GameRecord {
       @HiveField(2) required this.secondPlayerColorIndex,
       @HiveField(3) required this.firstPlayerIconIndex,
       @HiveField(4) required this.secondPlayerIconIndex,
-      @HiveField(5) required final List<MarkData> markDataList,
+      @HiveField(5) required final List<MarkOrderData> markDataList,
       @HiveField(6) required this.maxNumber,
       @HiveField(7) required this.createdAt})
       : _markDataList = markDataList;
@@ -226,10 +226,10 @@ class _$GameRecordImpl implements _GameRecord {
   @override
   @HiveField(4)
   final int secondPlayerIconIndex;
-  final List<MarkData> _markDataList;
+  final List<MarkOrderData> _markDataList;
   @override
   @HiveField(5)
-  List<MarkData> get markDataList {
+  List<MarkOrderData> get markDataList {
     if (_markDataList is EqualUnmodifiableListView) return _markDataList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_markDataList);
@@ -298,7 +298,7 @@ abstract class _GameRecord implements GameRecord {
       @HiveField(2) required final int secondPlayerColorIndex,
       @HiveField(3) required final int firstPlayerIconIndex,
       @HiveField(4) required final int secondPlayerIconIndex,
-      @HiveField(5) required final List<MarkData> markDataList,
+      @HiveField(5) required final List<MarkOrderData> markDataList,
       @HiveField(6) required final int maxNumber,
       @HiveField(7) required final DateTime createdAt}) = _$GameRecordImpl;
 
@@ -319,7 +319,7 @@ abstract class _GameRecord implements GameRecord {
   int get secondPlayerIconIndex;
   @override
   @HiveField(5)
-  List<MarkData> get markDataList;
+  List<MarkOrderData> get markDataList;
   @override
   @HiveField(6)
   int get maxNumber;
@@ -332,5 +332,179 @@ abstract class _GameRecord implements GameRecord {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GameRecordImplCopyWith<_$GameRecordImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$MarkOrderData {
+  @HiveField(0)
+  int? get order => throw _privateConstructorUsedError;
+  @HiveField(1)
+  MarkData? get markData => throw _privateConstructorUsedError;
+
+  /// Create a copy of MarkOrderData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $MarkOrderDataCopyWith<MarkOrderData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MarkOrderDataCopyWith<$Res> {
+  factory $MarkOrderDataCopyWith(
+          MarkOrderData value, $Res Function(MarkOrderData) then) =
+      _$MarkOrderDataCopyWithImpl<$Res, MarkOrderData>;
+  @useResult
+  $Res call({@HiveField(0) int? order, @HiveField(1) MarkData? markData});
+
+  $MarkDataCopyWith<$Res>? get markData;
+}
+
+/// @nodoc
+class _$MarkOrderDataCopyWithImpl<$Res, $Val extends MarkOrderData>
+    implements $MarkOrderDataCopyWith<$Res> {
+  _$MarkOrderDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of MarkOrderData
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? order = freezed,
+    Object? markData = freezed,
+  }) {
+    return _then(_value.copyWith(
+      order: freezed == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int?,
+      markData: freezed == markData
+          ? _value.markData
+          : markData // ignore: cast_nullable_to_non_nullable
+              as MarkData?,
+    ) as $Val);
+  }
+
+  /// Create a copy of MarkOrderData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MarkDataCopyWith<$Res>? get markData {
+    if (_value.markData == null) {
+      return null;
+    }
+
+    return $MarkDataCopyWith<$Res>(_value.markData!, (value) {
+      return _then(_value.copyWith(markData: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$MarkOrderDataImplCopyWith<$Res>
+    implements $MarkOrderDataCopyWith<$Res> {
+  factory _$$MarkOrderDataImplCopyWith(
+          _$MarkOrderDataImpl value, $Res Function(_$MarkOrderDataImpl) then) =
+      __$$MarkOrderDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@HiveField(0) int? order, @HiveField(1) MarkData? markData});
+
+  @override
+  $MarkDataCopyWith<$Res>? get markData;
+}
+
+/// @nodoc
+class __$$MarkOrderDataImplCopyWithImpl<$Res>
+    extends _$MarkOrderDataCopyWithImpl<$Res, _$MarkOrderDataImpl>
+    implements _$$MarkOrderDataImplCopyWith<$Res> {
+  __$$MarkOrderDataImplCopyWithImpl(
+      _$MarkOrderDataImpl _value, $Res Function(_$MarkOrderDataImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MarkOrderData
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? order = freezed,
+    Object? markData = freezed,
+  }) {
+    return _then(_$MarkOrderDataImpl(
+      order: freezed == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int?,
+      markData: freezed == markData
+          ? _value.markData
+          : markData // ignore: cast_nullable_to_non_nullable
+              as MarkData?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@HiveType(typeId: 3)
+class _$MarkOrderDataImpl implements _MarkOrderData {
+  const _$MarkOrderDataImpl(
+      {@HiveField(0) this.order, @HiveField(1) this.markData});
+
+  @override
+  @HiveField(0)
+  final int? order;
+  @override
+  @HiveField(1)
+  final MarkData? markData;
+
+  @override
+  String toString() {
+    return 'MarkOrderData(order: $order, markData: $markData)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MarkOrderDataImpl &&
+            (identical(other.order, order) || other.order == order) &&
+            (identical(other.markData, markData) ||
+                other.markData == markData));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, order, markData);
+
+  /// Create a copy of MarkOrderData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MarkOrderDataImplCopyWith<_$MarkOrderDataImpl> get copyWith =>
+      __$$MarkOrderDataImplCopyWithImpl<_$MarkOrderDataImpl>(this, _$identity);
+}
+
+abstract class _MarkOrderData implements MarkOrderData {
+  const factory _MarkOrderData(
+      {@HiveField(0) final int? order,
+      @HiveField(1) final MarkData? markData}) = _$MarkOrderDataImpl;
+
+  @override
+  @HiveField(0)
+  int? get order;
+  @override
+  @HiveField(1)
+  MarkData? get markData;
+
+  /// Create a copy of MarkOrderData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MarkOrderDataImplCopyWith<_$MarkOrderDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -22,7 +22,7 @@ class GameRecordImplAdapter extends TypeAdapter<_$GameRecordImpl> {
       secondPlayerColorIndex: fields[2] as int,
       firstPlayerIconIndex: fields[3] as int,
       secondPlayerIconIndex: fields[4] as int,
-      markDataList: (fields[5] as List).cast<MarkData>(),
+      markDataList: (fields[5] as List).cast<MarkOrderData>(),
       maxNumber: fields[6] as int,
       createdAt: fields[7] as DateTime,
     );
@@ -57,6 +57,43 @@ class GameRecordImplAdapter extends TypeAdapter<_$GameRecordImpl> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is GameRecordImplAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class MarkOrderDataImplAdapter extends TypeAdapter<_$MarkOrderDataImpl> {
+  @override
+  final int typeId = 3;
+
+  @override
+  _$MarkOrderDataImpl read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return _$MarkOrderDataImpl(
+      order: fields[0] as int?,
+      markData: fields[1] as MarkData?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, _$MarkOrderDataImpl obj) {
+    writer
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write(obj.order)
+      ..writeByte(1)
+      ..write(obj.markData);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MarkOrderDataImplAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

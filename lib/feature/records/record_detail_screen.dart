@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/const/app_const.dart';
 import 'package:tic_tac_toe/data/model/game_record.dart';
-import 'package:tic_tac_toe/data/model/mark_data.dart';
 
 class RecordDetailScreen extends StatelessWidget {
   const RecordDetailScreen({super.key, required this.gameRecord});
@@ -11,18 +10,6 @@ class RecordDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final maxWidth = MediaQueryData.fromView(View.of(context)).size.width;
-
-    List<({int? index, MarkData? markData})> historyIndex = List.generate(
-      gameRecord.maxNumber * gameRecord.maxNumber,
-      (index) => (index: null, markData: null),
-    );
-
-    int cur = 0;
-
-    for (int i = 0; i < gameRecord.markDataList.length; i++) {
-      cur = gameRecord.markDataList[i].rowNumber * gameRecord.maxNumber + gameRecord.markDataList[i].columnNumber;
-      historyIndex[cur] = (index: i, markData: gameRecord.markDataList[i]);
-    }
 
     return Scaffold(
       appBar: AppBar(title: const Text('RecordDetailScreen')),
@@ -68,16 +55,16 @@ class RecordDetailScreen extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      if (historyIndex[index].index != null)
+                      if (gameRecord.markDataList[index].order != null)
                         Positioned(
                           top: 8,
                           left: 8,
-                          child: Text('${historyIndex[index].index! + 1}번째'),
+                          child: Text('${gameRecord.markDataList[index].order! + 1}번째'),
                         ),
-                      if (historyIndex[index].markData != null)
+                      if (gameRecord.markDataList[index].markData != null)
                         Icon(
-                          AppConst.iconList[historyIndex[index].markData!.iconIndex],
-                          color: AppConst.colorList[historyIndex[index].markData!.colorIndex],
+                          AppConst.iconList[gameRecord.markDataList[index].markData!.iconIndex],
+                          color: AppConst.colorList[gameRecord.markDataList[index].markData!.colorIndex],
                         )
                     ],
                   ),

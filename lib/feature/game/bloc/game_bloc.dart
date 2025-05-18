@@ -307,12 +307,20 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     emit(const GameLoading());
 
     try {
+      List<MarkOrderData> markDataList = List.generate(maxNumber * maxNumber, (index) => const MarkOrderData());
+
+      for (int i = 0; i < makeDataHistoryList.length; i++) {
+        final data = markMap[makeDataHistoryList[i]]!;
+        final cur = data.rowNumber * maxNumber + data.columnNumber;
+        markDataList[cur] = MarkOrderData(order: i, markData: data);
+      }
+
       final gameRecord = GameRecord(
         firstPlayerColorIndex: firstPlayerColorIndex,
         secondPlayerColorIndex: secondPlayerColorIndex,
         firstPlayerIconIndex: firstPlayerIconIndex,
         secondPlayerIconIndex: secondPlayerIconIndex,
-        markDataList: [...makeDataHistoryList.map((e) => markMap[e]!)],
+        markDataList: [...markDataList],
         createdAt: DateTime.now(),
         winnerPlayer: winnerPlayer,
         maxNumber: maxNumber,

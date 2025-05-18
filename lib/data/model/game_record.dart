@@ -14,8 +14,17 @@ class GameRecord with _$GameRecord {
     @HiveField(2) required int secondPlayerColorIndex,
     @HiveField(3) required int firstPlayerIconIndex,
     @HiveField(4) required int secondPlayerIconIndex,
-    @HiveField(5) required List<MarkData> markDataList,
+    @HiveField(5) required List<MarkOrderData> markDataList,
     @HiveField(6) required int maxNumber,
     @HiveField(7) required DateTime createdAt,
   }) = _GameRecord;
+}
+
+@freezed
+class MarkOrderData with _$MarkOrderData {
+  @HiveType(typeId: 3)
+  const factory MarkOrderData({
+    @HiveField(0) int? order,
+    @HiveField(1) MarkData? markData,
+  }) = _MarkOrderData;
 }
