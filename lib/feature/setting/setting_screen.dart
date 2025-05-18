@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tic_tac_toe/const/app_const.dart';
+import 'package:tic_tac_toe/feature/game/bloc/game_bloc.dart';
 import 'package:tic_tac_toe/feature/game/game_scren.dart';
 import 'package:tic_tac_toe/feature/setting/bloc/setting_bloc.dart';
 import 'package:tic_tac_toe/feature/setting/widget/player_column.dart';
@@ -48,38 +50,6 @@ class SettingScreen extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('승리 조건: '),
-              BlocBuilder<SettingBloc, SettingState>(
-                buildWhen: (previous, current) => current is SettingDataChecked,
-                builder: (context, state) {
-                  int winningCount = 3;
-
-                  if (state is SettingDataChecked) {
-                    winningCount = state.winningCount;
-                  }
-
-                  return Text('$winningCount회');
-                },
-              ),
-              IconButton(
-                onPressed: () {
-                  final bloc = context.read<SettingBloc>();
-                  bloc.add(SettingWinningCountChanged(count: bloc.winningCount + 1));
-                },
-                icon: const Icon(CupertinoIcons.add),
-              ),
-              IconButton(
-                onPressed: () {
-                  final bloc = context.read<SettingBloc>();
-                  bloc.add(SettingWinningCountChanged(count: bloc.winningCount - 1));
-                },
-                icon: const Icon(CupertinoIcons.minus),
-              ),
-            ],
-          ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -104,7 +74,28 @@ class SettingScreen extends StatelessWidget {
             onPressed: () {
               final bloc = context.read<SettingBloc>();
 
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GameScreen()));
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider(
+                    create: (context) => GameBloc(
+                      firstPlayerColor: AppConst.colorList[bloc.firstPlayerColorIndex],
+                      secondPlayerColor: AppConst.colorList[bloc.secondPlayerColorIndex],
+                      firstPlayerIcon: AppConst.iconList[bloc.firstPlayerIconIndex],
+                      secondPlayerIcon: AppConst.iconList[bloc.secondPlayerIconIndex],
+                      firstAttackPlayerNumber: bloc.firstAttackPlayerNumber,
+                      maxNumber: bloc.maxNumber,
+                    ),
+                    child: GameScreen(
+                      firstPlayerColor: AppConst.colorList[bloc.firstPlayerColorIndex],
+                      secondPlayerColor: AppConst.colorList[bloc.secondPlayerColorIndex],
+                      firstPlayerIcon: AppConst.iconList[bloc.firstPlayerIconIndex],
+                      secondPlayerIcon: AppConst.iconList[bloc.secondPlayerIconIndex],
+                      firstAttackPlayer: bloc.firstAttackPlayerNumber,
+                      maxNumber: bloc.maxNumber,
+                    ),
+                  ),
+                ),
+              );
             },
             child: const Text('게임시작'),
           ),

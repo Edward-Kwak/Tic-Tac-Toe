@@ -16,15 +16,6 @@ final class SettingMaxNumberChanged extends SettingEvent {
   List<Object?> get props => [maxNumber];
 }
 
-final class SettingWinningCountChanged extends SettingEvent {
-  const SettingWinningCountChanged({required this.count});
-
-  final int count;
-
-  @override
-  List<Object?> get props => [count];
-}
-
 final class SettingPlayerIconChanged extends SettingEvent {
   const SettingPlayerIconChanged({
     required this.playerNumber,

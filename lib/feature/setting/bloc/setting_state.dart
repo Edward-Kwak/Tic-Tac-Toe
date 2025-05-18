@@ -14,14 +14,14 @@ final class SettingInitial extends SettingState {
 final class SettingDataChecked extends SettingState {
   const SettingDataChecked({
     required this.maxNumber,
-    required this.winningCount,
+    // required this.winningCount,
   });
 
   final int maxNumber;
-  final int winningCount;
+  // final int winningCount;
 
   @override
-  List<Object?> get props => [maxNumber, winningCount];
+  List<Object?> get props => [maxNumber];
 }
 
 final class SettingPlayerDataChecked extends SettingState {

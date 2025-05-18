@@ -9,14 +9,12 @@ part 'setting_state.dart';
 class SettingBloc extends Bloc<SettingEvent, SettingState> {
   SettingBloc() : super(const SettingInitial()) {
     on<SettingMaxNumberChanged>(_onSettingMaxNumberChanged);
-    on<SettingWinningCountChanged>(_onSettingWinningCountChanged);
     on<SettingPlayerColorChanged>(_onSettingPlayerColorChanged);
     on<SettingPlayerIconChanged>(_onSettingPlayerIconChanged);
     on<SettingPlayerOrderChanged>(_onSettingPlayerOrderChanged);
   }
 
   int maxNumber = 3;
-  int winningCount = 3;
 
   int firstPlayerColorIndex = 0;
   int secondPlayerColorIndex = 1;
@@ -34,20 +32,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
 
     maxNumber = event.maxNumber;
 
-    emit(SettingDataChecked(maxNumber: maxNumber, winningCount: winningCount));
-  }
-
-  FutureOr<void> _onSettingWinningCountChanged(
-    SettingWinningCountChanged event,
-    Emitter<SettingState> emit,
-  ) {
-    if (event.count < 3 || event.count > 6) {
-      return null;
-    }
-
-    winningCount = event.count;
-
-    emit(SettingDataChecked(maxNumber: maxNumber, winningCount: winningCount));
+    emit(SettingDataChecked(maxNumber: maxNumber));
   }
 
   FutureOr<void> _onSettingPlayerColorChanged(
