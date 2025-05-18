@@ -42,3 +42,7 @@ final class GameUndoRequested extends GameEvent {
   @override
   List<Object?> get props => [playerNumber];
 }
+
+final class GameSaveRequested extends GameEvent {
+  const GameSaveRequested();
+}

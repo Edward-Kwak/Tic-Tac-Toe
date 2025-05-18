@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/const/app_const.dart';
+import 'package:tic_tac_toe/data/datasource/local/app_local_datasource.dart';
+import 'package:tic_tac_toe/di/di.dart';
 import 'package:tic_tac_toe/feature/game/bloc/game_bloc.dart';
 import 'package:tic_tac_toe/feature/game/game_scren.dart';
 import 'package:tic_tac_toe/feature/setting/bloc/setting_bloc.dart';
@@ -78,12 +80,13 @@ class SettingScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => BlocProvider(
                     create: (context) => GameBloc(
-                      firstPlayerColor: AppConst.colorList[bloc.firstPlayerColorIndex],
-                      secondPlayerColor: AppConst.colorList[bloc.secondPlayerColorIndex],
-                      firstPlayerIcon: AppConst.iconList[bloc.firstPlayerIconIndex],
-                      secondPlayerIcon: AppConst.iconList[bloc.secondPlayerIconIndex],
+                      firstPlayerColorIndex: bloc.firstPlayerColorIndex,
+                      secondPlayerColorIndex: bloc.secondPlayerColorIndex,
+                      firstPlayerIconIndex: bloc.firstPlayerIconIndex,
+                      secondPlayerIconIndex: bloc.secondPlayerIconIndex,
                       firstAttackPlayerNumber: firstAttackPlayer,
                       maxNumber: bloc.maxNumber,
+                      appLocalDatasource: getIt<AppLocalDatasource>(),
                     ),
                     child: GameScreen(
                       firstPlayerColor: AppConst.colorList[bloc.firstPlayerColorIndex],

@@ -45,3 +45,15 @@ final class GameFinished extends GameState {
   @override
   List<Object?> get props => [winnerPlayer];
 }
+
+final class GameLoading extends GameState {
+  const GameLoading();
+}
+
+final class GameSaveSucceed extends GameState {
+  const GameSaveSucceed();
+}
+
+final class GameSaveError extends GameState {
+  const GameSaveError();
+}

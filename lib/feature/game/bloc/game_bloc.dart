@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/const/app_const.dart';
+import 'package:tic_tac_toe/data/datasource/local/app_local_datasource.dart';
+import 'package:tic_tac_toe/data/model/game_record.dart';
 import 'package:tic_tac_toe/data/model/mark_data.dart';
 
 part 'game_event.dart';
@@ -13,11 +14,12 @@ part 'game_state.dart';
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
     required int firstAttackPlayerNumber,
-    required this.firstPlayerColor,
-    required this.secondPlayerColor,
-    required this.firstPlayerIcon,
-    required this.secondPlayerIcon,
+    required this.firstPlayerColorIndex,
+    required this.secondPlayerColorIndex,
+    required this.firstPlayerIconIndex,
+    required this.secondPlayerIconIndex,
     required this.maxNumber,
+    required this.appLocalDatasource,
   }) : super(const GameInitial()) {
     currentPlayer = firstAttackPlayerNumber;
 
@@ -25,9 +27,28 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<GamePlayed>(_onGamePlayed);
     on<GameUndoRequested>(_onGameUndoRequested);
     on<GameRandomPlayed>(_onGameRandomPlayed);
+    on<GameSaveRequested>(_onGameSaveRequested);
 
     runTimer();
   }
+
+  final AppLocalDatasource appLocalDatasource;
+
+  final int firstPlayerColorIndex;
+  final int secondPlayerColorIndex;
+  final int firstPlayerIconIndex;
+  final int secondPlayerIconIndex;
+  final int maxNumber;
+
+  int currentPlayer = 1;
+
+  int firstPlayerUndoCount = 3;
+  int secondPlayerUndoCount = 3;
+
+  StreamSubscription<int>? streamSubscription;
+
+  List<int> makeDataHistoryList = [];
+  Map<int, MarkData?> markMap = {};
 
   void runTimer() {
     streamSubscription?.cancel();
@@ -49,22 +70,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       },
     );
   }
-
-  final Color firstPlayerColor;
-  final Color secondPlayerColor;
-  final IconData firstPlayerIcon;
-  final IconData secondPlayerIcon;
-  final int maxNumber;
-
-  int currentPlayer = 1;
-
-  int firstPlayerUndoCount = 3;
-  int secondPlayerUndoCount = 3;
-
-  StreamSubscription<int>? streamSubscription;
-
-  List<int> makeDataHistoryList = [];
-  Map<int, MarkData?> markMap = {};
 
   @override
   Future<void> close() async {
@@ -89,23 +94,23 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     runTimer();
 
-    Color color;
-    IconData iconData;
+    int color;
+    int iconData;
 
     if (event.playerNumber == 1) {
-      color = firstPlayerColor;
-      iconData = firstPlayerIcon;
+      color = firstPlayerColorIndex;
+      iconData = firstPlayerIconIndex;
     } else {
-      color = secondPlayerColor;
-      iconData = secondPlayerIcon;
+      color = secondPlayerColorIndex;
+      iconData = secondPlayerIconIndex;
     }
 
     final data = MarkData(
       playerNumber: event.playerNumber,
       rowNumber: event.markIndex ~/ maxNumber,
       columnNumber: event.markIndex % maxNumber,
-      color: color,
-      iconData: iconData,
+      colorIndex: color,
+      iconIndex: iconData,
     );
 
     markMap[event.markIndex] = data;
@@ -291,5 +296,28 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
 
     return (isFinish: false, winnerPlayer: null);
+  }
+
+  FutureOr<void> _onGameSaveRequested(
+    GameSaveRequested event,
+    Emitter<GameState> emit,
+  ) async {
+    emit(const GameLoading());
+
+    try {
+      final gameRecord = GameRecord(
+        firstPlayerColorIndex: firstPlayerColorIndex,
+        secondPlayerColorIndex: secondPlayerColorIndex,
+        firstPlayerIconIndex: firstPlayerIconIndex,
+        secondPlayerIconIndex: secondPlayerIconIndex,
+        markDataList: [...makeDataHistoryList.map((e) => markMap[e]!)],
+      );
+
+      await appLocalDatasource.saveGameRecord(gameRecord);
+
+      emit(const GameSaveSucceed());
+    } catch (_) {
+      emit(const GameSaveError());
+    }
   }
 }

@@ -27,17 +27,20 @@ class GameScreen extends StatelessWidget {
     final maxWidth = MediaQueryData.fromView(View.of(context)).size.width;
 
     return BlocListener<GameBloc, GameState>(
-      listener: (context, state) {
+      listener: (context, state) async {
+        final navigator = Navigator.of(context);
+        final bloc = context.read<GameBloc>();
+
         if (state is GameFinished) {
-          showDialog(
+          final result = await showDialog(
             context: context,
             builder: (context) => AlertDialog(
               title: const Text('게임이 종료되었습니다'),
               content: Text(
                 '''
-                ${state.winnerPlayer == null ? '무승부입니다' : '우승: Player${state.winnerPlayer}'}
-                결과를 저장하시겠습니까?
-                ''',
+${state.winnerPlayer == null ? '무승부입니다' : '우승: Player${state.winnerPlayer}'}
+결과를 저장하시겠습니까?
+''',
                 textAlign: TextAlign.center,
               ),
               actionsAlignment: MainAxisAlignment.center,
@@ -53,6 +56,46 @@ class GameScreen extends StatelessWidget {
               ],
             ),
           );
+
+          if (result != true) {
+            navigator.pop();
+
+            return;
+          }
+
+          bloc.add(const GameSaveRequested());
+        } else if (state is GameSaveError) {
+          await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: const Text('저장하는데 실패했습니다.', textAlign: TextAlign.center),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('확인'),
+                ),
+              ],
+            ),
+          );
+
+          navigator.pop();
+        } else if (state is GameSaveSucceed) {
+          await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: const Text('저장 완료되었습니다.', textAlign: TextAlign.center),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('확인'),
+                ),
+              ],
+            ),
+          );
+
+          navigator.pop();
         }
       },
       child: PopScope(
@@ -194,8 +237,12 @@ class GameScreen extends StatelessWidget {
                         IconData? iconData;
 
                         if (state is GameMarkChecked) {
-                          color = state.markMap[index]?.color;
-                          iconData = state.markMap[index]?.iconData;
+                          color = state.markMap[index]?.colorIndex != null
+                              ? AppConst.colorList[state.markMap[index]!.colorIndex]
+                              : null;
+                          iconData = state.markMap[index]?.iconIndex != null
+                              ? AppConst.iconList[state.markMap[index]!.iconIndex]
+                              : null;
                         }
 
                         return Container(

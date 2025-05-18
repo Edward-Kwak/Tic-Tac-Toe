@@ -16,11 +16,16 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MarkData {
+  @HiveField(0)
   int get playerNumber => throw _privateConstructorUsedError;
+  @HiveField(1)
   int get rowNumber => throw _privateConstructorUsedError;
+  @HiveField(2)
   int get columnNumber => throw _privateConstructorUsedError;
-  Color get color => throw _privateConstructorUsedError;
-  IconData get iconData => throw _privateConstructorUsedError;
+  @HiveField(3)
+  int get colorIndex => throw _privateConstructorUsedError;
+  @HiveField(4)
+  int get iconIndex => throw _privateConstructorUsedError;
 
   /// Create a copy of MarkData
   /// with the given fields replaced by the non-null parameter values.
@@ -35,11 +40,11 @@ abstract class $MarkDataCopyWith<$Res> {
       _$MarkDataCopyWithImpl<$Res, MarkData>;
   @useResult
   $Res call(
-      {int playerNumber,
-      int rowNumber,
-      int columnNumber,
-      Color color,
-      IconData iconData});
+      {@HiveField(0) int playerNumber,
+      @HiveField(1) int rowNumber,
+      @HiveField(2) int columnNumber,
+      @HiveField(3) int colorIndex,
+      @HiveField(4) int iconIndex});
 }
 
 /// @nodoc
@@ -60,8 +65,8 @@ class _$MarkDataCopyWithImpl<$Res, $Val extends MarkData>
     Object? playerNumber = null,
     Object? rowNumber = null,
     Object? columnNumber = null,
-    Object? color = null,
-    Object? iconData = null,
+    Object? colorIndex = null,
+    Object? iconIndex = null,
   }) {
     return _then(_value.copyWith(
       playerNumber: null == playerNumber
@@ -76,14 +81,14 @@ class _$MarkDataCopyWithImpl<$Res, $Val extends MarkData>
           ? _value.columnNumber
           : columnNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-      iconData: null == iconData
-          ? _value.iconData
-          : iconData // ignore: cast_nullable_to_non_nullable
-              as IconData,
+      colorIndex: null == colorIndex
+          ? _value.colorIndex
+          : colorIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      iconIndex: null == iconIndex
+          ? _value.iconIndex
+          : iconIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -97,11 +102,11 @@ abstract class _$$MarkDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int playerNumber,
-      int rowNumber,
-      int columnNumber,
-      Color color,
-      IconData iconData});
+      {@HiveField(0) int playerNumber,
+      @HiveField(1) int rowNumber,
+      @HiveField(2) int columnNumber,
+      @HiveField(3) int colorIndex,
+      @HiveField(4) int iconIndex});
 }
 
 /// @nodoc
@@ -120,8 +125,8 @@ class __$$MarkDataImplCopyWithImpl<$Res>
     Object? playerNumber = null,
     Object? rowNumber = null,
     Object? columnNumber = null,
-    Object? color = null,
-    Object? iconData = null,
+    Object? colorIndex = null,
+    Object? iconIndex = null,
   }) {
     return _then(_$MarkDataImpl(
       playerNumber: null == playerNumber
@@ -136,42 +141,48 @@ class __$$MarkDataImplCopyWithImpl<$Res>
           ? _value.columnNumber
           : columnNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-      iconData: null == iconData
-          ? _value.iconData
-          : iconData // ignore: cast_nullable_to_non_nullable
-              as IconData,
+      colorIndex: null == colorIndex
+          ? _value.colorIndex
+          : colorIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      iconIndex: null == iconIndex
+          ? _value.iconIndex
+          : iconIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
 /// @nodoc
 
+@HiveType(typeId: 2)
 class _$MarkDataImpl implements _MarkData {
   const _$MarkDataImpl(
-      {required this.playerNumber,
-      required this.rowNumber,
-      required this.columnNumber,
-      required this.color,
-      required this.iconData});
+      {@HiveField(0) required this.playerNumber,
+      @HiveField(1) required this.rowNumber,
+      @HiveField(2) required this.columnNumber,
+      @HiveField(3) required this.colorIndex,
+      @HiveField(4) required this.iconIndex});
 
   @override
+  @HiveField(0)
   final int playerNumber;
   @override
+  @HiveField(1)
   final int rowNumber;
   @override
+  @HiveField(2)
   final int columnNumber;
   @override
-  final Color color;
+  @HiveField(3)
+  final int colorIndex;
   @override
-  final IconData iconData;
+  @HiveField(4)
+  final int iconIndex;
 
   @override
   String toString() {
-    return 'MarkData(playerNumber: $playerNumber, rowNumber: $rowNumber, columnNumber: $columnNumber, color: $color, iconData: $iconData)';
+    return 'MarkData(playerNumber: $playerNumber, rowNumber: $rowNumber, columnNumber: $columnNumber, colorIndex: $colorIndex, iconIndex: $iconIndex)';
   }
 
   @override
@@ -185,14 +196,15 @@ class _$MarkDataImpl implements _MarkData {
                 other.rowNumber == rowNumber) &&
             (identical(other.columnNumber, columnNumber) ||
                 other.columnNumber == columnNumber) &&
-            (identical(other.color, color) || other.color == color) &&
-            (identical(other.iconData, iconData) ||
-                other.iconData == iconData));
+            (identical(other.colorIndex, colorIndex) ||
+                other.colorIndex == colorIndex) &&
+            (identical(other.iconIndex, iconIndex) ||
+                other.iconIndex == iconIndex));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, playerNumber, rowNumber, columnNumber, color, iconData);
+  int get hashCode => Object.hash(runtimeType, playerNumber, rowNumber,
+      columnNumber, colorIndex, iconIndex);
 
   /// Create a copy of MarkData
   /// with the given fields replaced by the non-null parameter values.
@@ -205,22 +217,27 @@ class _$MarkDataImpl implements _MarkData {
 
 abstract class _MarkData implements MarkData {
   const factory _MarkData(
-      {required final int playerNumber,
-      required final int rowNumber,
-      required final int columnNumber,
-      required final Color color,
-      required final IconData iconData}) = _$MarkDataImpl;
+      {@HiveField(0) required final int playerNumber,
+      @HiveField(1) required final int rowNumber,
+      @HiveField(2) required final int columnNumber,
+      @HiveField(3) required final int colorIndex,
+      @HiveField(4) required final int iconIndex}) = _$MarkDataImpl;
 
   @override
+  @HiveField(0)
   int get playerNumber;
   @override
+  @HiveField(1)
   int get rowNumber;
   @override
+  @HiveField(2)
   int get columnNumber;
   @override
-  Color get color;
+  @HiveField(3)
+  int get colorIndex;
   @override
-  IconData get iconData;
+  @HiveField(4)
+  int get iconIndex;
 
   /// Create a copy of MarkData
   /// with the given fields replaced by the non-null parameter values.
